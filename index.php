@@ -10,7 +10,7 @@ foreach ($user as $key => $value) {
 	echo '<br>';
 }*/
 
-$find = $user->find(12);
+// $find = $usuario->destroy("nome = 'rogerio'");
 
 var_dump($find);
 

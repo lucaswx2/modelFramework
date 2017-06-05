@@ -48,7 +48,14 @@ class Model extends Conexao{
 	}
 
 
-
+	public function destroy($params){
+		if(gettype($params) == "array"){ $array = true;};
+		$params = self::getParams($params);
+		$query = "DELETE FROM $this->table WHERE $params";
+		echo $query;
+		$result = self::executeQuery($query);
+		return $result;
+	}
 
 
 
