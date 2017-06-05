@@ -1,6 +1,6 @@
 <?php 
 
-require_once "C:\\xampp\htdocs\diego\db\model.php";
+require_once "model.php";
 
 class Car extends Model{
 

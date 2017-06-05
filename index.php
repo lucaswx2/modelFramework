@@ -10,7 +10,7 @@ foreach ($user as $key => $value) {
 	echo '<br>';
 }*/
 
-$find = $usuario->find(1,"nome,idade");
+$find = $usuario->create(["rogerio",12,"idade"]);
 
 var_dump($find);
 

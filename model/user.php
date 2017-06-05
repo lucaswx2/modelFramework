@@ -1,6 +1,6 @@
 <?php 
 
-require_once "C:\\xampp\htdocs\diego\db\model.php";
+require_once "model.php";
 
 	/**
 	* 
@@ -10,7 +10,7 @@ require_once "C:\\xampp\htdocs\diego\db\model.php";
 
 		function __construct(){
 			$this->table = "users";
-			$this->attributes = array();
+			$this->attributes = ["nome","idade","cpf"];
 		}
 	}
 

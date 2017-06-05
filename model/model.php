@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__.'\conexao.php';
+require_once __DIR__.'/..'.'\db\conexao.php';
 
 class Model extends Conexao{
 	protected $table;
@@ -38,8 +38,13 @@ class Model extends Conexao{
 		return $result;
 	}
 
-	public function create(){
-		
+	public function create($params){
+		$params = self::getParamsCreate($params);
+		$attributes = self::getAttributes($this->attributes);
+		$query = "INSERT into $this->table ($attributes) VALUES ($params);";
+		echo $query;
+		$result = self::executeQuery($query);
+		return $result;	
 	}
 
 
@@ -60,6 +65,34 @@ class Model extends Conexao{
 			}
 			$params = substr($params,0,-1);
 			$params.=")";
+			return $params;
+		}else{
+			return $params;
+		}
+	}
+
+	private function getAttributes($attributes){
+		if(gettype($attributes)=="array"){
+			$array=$attributes;
+			$attributes = "";
+			foreach ($array as $valor) {
+				$attributes.= $valor.",";
+			}
+			$attributes = substr($attributes,0,-1);
+			return $attributes;
+		}else{
+			return $attributes;
+		}
+	}
+
+	private function getParamsCreate($params){
+		if(gettype($params) == "array"){
+			$array = $params;
+			$params = "";
+			foreach ($array as $valor) {
+				$params.= "'".$valor."'".",";
+			}
+			$params = substr($params,0,-1);
 			return $params;
 		}else{
 			return $params;
