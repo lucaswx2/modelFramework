@@ -6,11 +6,13 @@ class Model extends Conexao{
 	protected $attributes;
 
 
-	public function all(){
+	public function all($param=""){
 		$rows = array();
-		$query = "SELECT * FROM $this->table";
+		$query = "SELECT * FROM $this->table $param";
 		$result = self::executeQuery($query);
+	
 		while ($row = mysqli_fetch_array($result)) $rows[] = $row;
+
 		return $rows;
 	}
 
@@ -25,7 +27,7 @@ class Model extends Conexao{
 			while($row = mysqli_fetch_array($result)) $rows[] = $row;
 			return $rows;
 		}else{
-			return mysqli_fetch_assoc($result);
+			return mysqli_fetch_array($result);
 		}
 
 	}
@@ -34,15 +36,15 @@ class Model extends Conexao{
 		$params = self::getParams($params);
 		$query = "UPDATE $this->table SET $attributes WHERE $params";
 		$result = self::executeQuery($query);
-		echo $query;
 		return $result;
 	}
 
 	public function create($params){
+                
 		$params = self::getParamsCreate($params);
 		$attributes = self::getAttributes($this->attributes);
 		$query = "INSERT into $this->table ($attributes) VALUES ($params);";
-		echo $query;
+                
 		$result = self::executeQuery($query);
 		return $result;	
 	}
@@ -52,9 +54,14 @@ class Model extends Conexao{
 		if(gettype($params) == "array"){ $array = true;};
 		$params = self::getParams($params);
 		$query = "DELETE FROM $this->table WHERE $params";
-		echo $query;
 		$result = self::executeQuery($query);
 		return $result;
+	}
+
+	public function logar($login,$password){
+		$query = "SELECT * FROM login WHERE email = '$login' AND senha = '$password' ";
+		$verifica = self::executeQuery($query);
+		return mysqli_num_rows($verifica);
 	}
 
 
@@ -98,9 +105,13 @@ class Model extends Conexao{
 			$params = "";
 			foreach ($array as $valor) {
 				$params.= "'".$valor."'".",";
+			
 			}
+
 			$params = substr($params,0,-1);
+
 			return $params;
+
 		}else{
 			return $params;
 		}
